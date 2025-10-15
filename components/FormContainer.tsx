@@ -5,7 +5,6 @@ import { useState } from 'react'
 import axios from 'axios'
 
 function FormContainer() {
- 
  const [task, setTask] = useState<string>("")
  const [loading, setLoading] = useState<boolean>(false);
 
@@ -17,7 +16,7 @@ function FormContainer() {
   try {
     const response = await axios.post("/api/todos", {task});
     console.log('created todo', response.data);
-
+    setTask("")
   } catch (error) {
     console.log(error)
   }
@@ -29,7 +28,7 @@ function FormContainer() {
 
 
   return (
-    <section >
+    <section>
      <form onSubmit={onSubmit}>
       <div className='flex gap-x-2'>
      <Input type='text' name='task' value={task} onChange={(e) => setTask(e.target.value)} required placeholder='Enter task name' />

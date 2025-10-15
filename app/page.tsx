@@ -1,4 +1,5 @@
 import FormContainer from "@/components/FormContainer";
+import TaskContainer from "@/components/TaskContainer";
 import Image from "next/image";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
     <h1 className="text-center">Nextjs Todo list API</h1>
     <div className="max-w-xl mx-auto mt-8 md:mt-10">
     <FormContainer />
+    <TaskContainer />
     </div>
    </section>
   );

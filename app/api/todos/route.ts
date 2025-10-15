@@ -21,3 +21,16 @@ try {
  return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
 }
 }
+
+export async function GET() { 
+ 
+ try {
+  const todos = await db.todo.findMany();
+    return NextResponse.json(todos, { status: 200 });
+ } catch (error) {
+  console.error(error);
+  return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+ }
+}
+
+
