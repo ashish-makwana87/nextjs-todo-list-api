@@ -1,15 +1,39 @@
-import React from 'react'
+'use client'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
+import { useState } from 'react'
+import axios from 'axios'
 
 function FormContainer() {
+ 
+ const [task, setTask] = useState<string>("")
+ const [loading, setLoading] = useState<boolean>(false);
+
+ const onSubmit = async (e: React.FormEvent) => {
+
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const response = await axios.post("/api/todos", {task});
+    console.log('created todo', response.data);
+
+  } catch (error) {
+    console.log(error)
+  }
+  finally {
+    setLoading(false)
+  }
+
+ }
+
 
   return (
     <section >
-     <form action="">
+     <form onSubmit={onSubmit}>
       <div className='flex gap-x-2'>
-     <Input type='text' name='task'  />
-     <Button type='submit'>Add Task</Button>
+     <Input type='text' name='task' value={task} onChange={(e) => setTask(e.target.value)} required placeholder='Enter task name' />
+     <Button type='submit' disabled={loading}>{loading ? "Adding..." : "Add Task"}</Button>
       </div>
      </form>
     </section>
