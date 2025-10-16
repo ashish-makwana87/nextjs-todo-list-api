@@ -1,9 +1,11 @@
 import db from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, context: { params: Promise<{ id: string }> } | { params: { id: string } }) {
   try {
-    const { id } = params;
+    const resolvedParams = await Promise.resolve(context.params);
+    const { id } = resolvedParams;
+
     const body = await req.json();
     const { completed } = body;
 
@@ -20,13 +22,12 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 }
 
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, context: { params: Promise<{ id: string }> } | { params: { id: string } }) {
   try {
-    const { id } = params;
+    const resolvedParams = await Promise.resolve(context.params);
+    const { id } = resolvedParams;
 
-    await db.todo.delete({
-      where: { id },
-    });
+    await db.todo.delete({ where: { id } });
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
