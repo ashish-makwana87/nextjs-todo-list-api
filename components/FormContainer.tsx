@@ -2,6 +2,7 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { memo, useState } from 'react'
 import axios from 'axios'
+import { toast } from "sonner"
 
 function FormContainer({onTaskAdded}: { onTaskAdded: () => void }) {
  const [task, setTask] = useState<string>("")
@@ -10,6 +11,12 @@ function FormContainer({onTaskAdded}: { onTaskAdded: () => void }) {
  const onSubmit = async (e: React.FormEvent) => {
 
   e.preventDefault();
+
+  if (!task) {
+      toast.error('please add a task name')
+      return;
+    };
+
   setLoading(true);
 
   try {
@@ -17,6 +24,7 @@ function FormContainer({onTaskAdded}: { onTaskAdded: () => void }) {
     console.log('created todo', response.data);
     setTask("")
     onTaskAdded();
+    toast.success('Task added')
   } catch (error) {
     console.log(error)
   }

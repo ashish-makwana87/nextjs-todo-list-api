@@ -3,7 +3,7 @@ import { Input } from './ui/input'
 import axios from 'axios'
 import { Button } from './ui/button'
 import { useState } from 'react'
-
+import { toast } from "sonner"
 
 function SingleTask({task, onTaskAdded}:{task: Todo, onTaskAdded: () => void}) {
    
@@ -26,6 +26,7 @@ const handleDelete = async () => {
     try {
       await axios.delete(`/api/todos/${task.id}`)
       onTaskAdded()
+      toast.success('Task deleted')
     } catch (err) {
       console.error(err)
     }
