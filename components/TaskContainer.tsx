@@ -3,7 +3,7 @@ import axios from 'axios'
 import SingleTask from './SingleTask';
 import { Todo } from '@/utils/types'
 
-function TaskContainer({refreshPage}: {refreshPage: number}) {
+function TaskContainer({refreshPage, onTaskAdded}: {refreshPage: number, onTaskAdded: () => void}) {
 const [todos, setTodos] = useState<Todo[]>([]);
 
 useEffect(() => {
@@ -19,10 +19,10 @@ useEffect(() => {
   }, [refreshPage])
 
   return (
-    <section className='mt-4 md:mt-6 p-4 border rounded'>
+    <section className='mt-4 md:mt-6 p-4 border rounded grid gap-y-2'>
      {todos.map((task) => {
      
-     return <SingleTask key={task.id} task={task} />
+     return <SingleTask key={task.id} task={task} onTaskAdded={onTaskAdded} />
      })}
     </section>
   )

@@ -16,7 +16,7 @@ export default function Home() {
     <h1 className="text-center">Nextjs Todo list API</h1>
     <div className="max-w-xl mx-auto mt-8 md:mt-10">
     <FormContainer onTaskAdded={handleTaskAdded} />
-    <TaskContainer refreshPage={refreshPage} />
+    <TaskContainer refreshPage={refreshPage} onTaskAdded={handleTaskAdded}  />
     </div>
    </section>
   );
