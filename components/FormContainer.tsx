@@ -1,10 +1,9 @@
-'use client'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import axios from 'axios'
 
-function FormContainer() {
+function FormContainer({onTaskAdded}: { onTaskAdded: () => void }) {
  const [task, setTask] = useState<string>("")
  const [loading, setLoading] = useState<boolean>(false);
 
@@ -17,6 +16,7 @@ function FormContainer() {
     const response = await axios.post("/api/todos", {task});
     console.log('created todo', response.data);
     setTask("")
+    onTaskAdded();
   } catch (error) {
     console.log(error)
   }
@@ -39,4 +39,4 @@ function FormContainer() {
   )
 }
 
-export default FormContainer
+export default memo(FormContainer)

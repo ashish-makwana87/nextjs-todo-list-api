@@ -1,10 +1,9 @@
-'use client'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import SingleTask from './SingleTask';
-import { Todo } from '@prisma/client';
+import { Todo } from '@/utils/types'
 
-function TaskContainer() {
+function TaskContainer({refreshPage}: {refreshPage: number}) {
 const [todos, setTodos] = useState<Todo[]>([]);
 
 useEffect(() => {
@@ -17,10 +16,10 @@ useEffect(() => {
       }
     }
     fetchTodos()
-  }, [])
+  }, [refreshPage])
 
   return (
-    <section className='mt-4 md:mt-6'>
+    <section className='mt-4 md:mt-6 p-4 border rounded'>
      {todos.map((task) => {
      
      return <SingleTask key={task.id} task={task} />
